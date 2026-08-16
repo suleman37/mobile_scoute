@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import RelatedProduct from "../components/RelatedProduct";
@@ -22,6 +22,20 @@ const Product = () => {
   const { products } = useContext(ShopContext);
   const [productData, setProductData] = useState(null);
   const [image, setImage] = useState("");
+  const customerReviewsRef = useRef(null);
+
+  const scrollCustomerReviews = (direction) => {
+    const carousel = customerReviewsRef.current;
+
+    if (!carousel) {
+      return;
+    }
+
+    carousel.scrollBy({
+      left: direction * Math.max(carousel.clientWidth * 0.85, 320),
+      behavior: "smooth",
+    });
+  };
 
   useEffect(() => {
     const product = products.find((item) => item._id === id);
@@ -190,17 +204,41 @@ const Product = () => {
       </div>
       {productData.customerReviews?.length > 0 && (
         <section className="mt-16">
-          <div>
-            <h2 className="text-lg font-semibold">Customer feedback</h2>
-            <p className="mt-1 text-sm text-gray-500">
-              Seeded sample feedback from different platforms.
-            </p>
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <h2 className="text-lg font-semibold">Customer feedback</h2>
+              <p className="mt-1 text-sm text-gray-500">
+                Seeded sample feedback from different platforms.
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => scrollCustomerReviews(-1)}
+                aria-label="Show previous customer reviews"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-gray-700 transition-colors hover:border-black hover:bg-black hover:text-white"
+              >
+                <svg aria-hidden="true" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path d="m15 18-6-6 6-6" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={() => scrollCustomerReviews(1)}
+                aria-label="Show next customer reviews"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-gray-700 transition-colors hover:border-black hover:bg-black hover:text-white"
+              >
+                <svg aria-hidden="true" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path d="m9 18 6-6-6-6" />
+                </svg>
+              </button>
+            </div>
           </div>
-          <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {productData.customerReviews.slice(0, 4).map((review, index) => (
+          <div ref={customerReviewsRef} className="mt-5 flex gap-4 overflow-x-auto scroll-smooth pb-1">
+            {productData.customerReviews.map((review, index) => (
               <article
                 key={`${productData._id}-customer-review-${index}`}
-                className="rounded-2xl border border-gray-200 p-5"
+                className="w-full shrink-0 rounded-2xl border border-gray-200 p-5 sm:w-[calc((100%-1rem)/2)] xl:w-[calc((100%-3rem)/4)]"
               >
                 <div className="flex items-center justify-between gap-3">
                   <p className="font-semibold text-gray-900">{review.clientName}</p>

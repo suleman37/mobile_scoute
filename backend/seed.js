@@ -106,8 +106,8 @@ const createCustomerReview = (title, index) => ({
 });
 
 const createCustomerReviews = (title, phoneIndex) =>
-  [0, 1, 2, 3].map((reviewIndex) =>
-    createCustomerReview(title, phoneIndex * 4 + reviewIndex)
+  Array.from({ length: 8 }, (_, reviewIndex) =>
+    createCustomerReview(title, phoneIndex * 8 + reviewIndex)
   );
 
 const phoneData = catalog.map(
