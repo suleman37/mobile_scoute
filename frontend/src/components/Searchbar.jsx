@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import searchicon from "../assets/frontend_assets/search_icon.png";
 import crossicon from "../assets/frontend_assets/cross_icon.png";
 import { ShopContext } from "../context/ShopContext";
@@ -9,6 +9,8 @@ const Searchbar = () => {
     useContext(ShopContext);
   const [isVisible, setIsVisible] = useState(true);
   const [searchMessage, setSearchMessage] = useState("");
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef(null);
   const navigate = useNavigate();
 
   const matchedProducts = useMemo(() => {
@@ -39,9 +41,50 @@ const Searchbar = () => {
   };
 
   const handleCloseClick = () => {
+    recognitionRef.current?.abort();
     setSearch("");
     setShowSearch(false);
     setSearchMessage("");
+  };
+
+  const startVoiceSearch = () => {
+    const SpeechRecognition =
+      window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+      setSearchMessage("Voice search is supported in Chrome and other compatible browsers.");
+      return;
+    }
+
+    recognitionRef.current?.abort();
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    recognition.onstart = () => {
+      setIsListening(true);
+      setSearchMessage("Listening… say a mobile name or brand.");
+    };
+    recognition.onresult = (event) => {
+      setSearch(event.results[0][0].transcript);
+      setSearchMessage("");
+    };
+    recognition.onerror = (event) => {
+      const message =
+        event.error === "not-allowed"
+          ? "Please allow microphone access to use voice search."
+          : "Voice search could not hear a query. Please try again.";
+      setSearchMessage(message);
+    };
+    recognition.onend = () => {
+      setIsListening(false);
+      recognitionRef.current = null;
+    };
+
+    recognitionRef.current = recognition;
+    recognition.start();
   };
 
   const openProduct = (product) => {
@@ -78,6 +121,13 @@ const Searchbar = () => {
     };
   }, []);
 
+  useEffect(
+    () => () => {
+      recognitionRef.current?.abort();
+    },
+    []
+  );
+
   return (
     <div
       className={`fixed inset-x-20 top-20 z-[120] flex items-start justify-center bg-transparent transition-opacity duration-300 ${
@@ -99,17 +149,28 @@ const Searchbar = () => {
         >
           <img src={crossicon} alt="Close" className="w-2 h-2" />
         </button>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="relative">
           <input
             type="text"
             value={search}
             onChange={handleInputChange}
             placeholder="Search product name, brand, storage, or variant..."
-            className="w-full px-6 py-3 pr-16 text-gray-700 bg-transparent border border-gray-300 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-6 py-3 pr-28 text-gray-700 bg-transparent border border-gray-300 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <button
+            type="button"
+            className={`absolute right-14 top-1/2 -translate-y-1/2 text-lg transition-colors ${
+              isListening ? "animate-pulse text-red-600" : "text-gray-600 hover:text-red-600"
+            }`}
+            onClick={startVoiceSearch}
+            aria-label={isListening ? "Listening for voice search" : "Start voice search"}
+            title={isListening ? "Listening" : "Voice search"}
+          >
+            🎙
+          </button>
+          <button
             type="submit"
-            className="absolute right-0 top-0 mt-7 mr-7 text-gray-600 hover:text-blue-500"
+            className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-600 hover:text-blue-500"
           >
             <img src={searchicon} alt="Search" className="w-6 h-6" />
           </button>
