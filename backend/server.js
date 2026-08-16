@@ -7,13 +7,22 @@ import  mobileRoute from './routes/phoneRoute.js';
 const app = express();
 const port = process.env.PORT || 5000;
 
-ConnectDB();
-
 app.use(cors());
 app.use(express.json());
+app.use('/images', express.static('public'));
 
 app.use('/api', mobileRoute);
  
-app.listen(port, () => {
-  console.log(`Server is Running on port ${port}`);
-});
+const startServer = async () => {
+  try {
+    await ConnectDB();
+    app.listen(port, () => {
+      console.log(`Server is Running on port ${port}`);
+    });
+  } catch (error) {
+    console.error("Failed to connect to MongoDB:", error.message);
+    process.exit(1);
+  }
+};
+
+startServer();
