@@ -38,15 +38,77 @@ const catalog = [
   ["TECNO Camon 30 Premier", "TECNO", "Camon 30 Premier", "512GB", 149999, 159999, 2024],
 ];
 
-const createYouTubeReview = (title) => {
-  const searchQuery = encodeURIComponent(`${title} full review`);
-
-  return {
-    title: `${title} video review`,
-    platform: "YouTube",
-    url: `https://www.youtube.com/results?search_query=${searchQuery}`,
-  };
+const youtubeReviewUrls = {
+  "iPhone 16 Pro Max": "https://www.youtube.com/watch?v=xQwfnYh2dmY",
+  "iPhone 16 Pro": "https://www.youtube.com/watch?v=7fQGx7mZxcw",
+  "iPhone 16 Plus": "https://www.youtube.com/watch?v=yvJE-ktP7OE",
+  "iPhone 16": "https://www.youtube.com/watch?v=aDqzDoJPkaA",
+  "iPhone 15 Pro Max": "https://www.youtube.com/watch?v=cVpcl7KGly0",
+  "iPhone 15 Pro": "https://www.youtube.com/watch?v=2LogFbMb58w",
+  "iPhone 15 Plus": "https://www.youtube.com/watch?v=C8i_Y8Ky8CE",
+  "iPhone 15": "https://www.youtube.com/watch?v=T8ZnoMQpimA",
+  "Galaxy S25 Ultra": "https://www.youtube.com/watch?v=XkXbkxtBlwY",
+  "Galaxy S25 Plus": "https://www.youtube.com/watch?v=TbZH_hpveUk",
+  "Galaxy S25": "https://www.youtube.com/watch?v=1HFLee3XkcE",
+  "Galaxy S24 Ultra": "https://www.youtube.com/watch?v=K-JGaqfIOmI",
+  "Galaxy A56": "https://www.youtube.com/watch?v=Lnjk-ptx-SY",
+  "Galaxy A36": "https://www.youtube.com/watch?v=Nli7B1PTRxA",
+  "Pixel 9 Pro XL": "https://www.youtube.com/watch?v=fybgemCCPYI",
+  "Pixel 9 Pro": "https://www.youtube.com/watch?v=bfuCOm7lKSo",
+  "Pixel 9": "https://www.youtube.com/watch?v=fkzPG0k6rSk",
+  "Xiaomi 15 Ultra": "https://www.youtube.com/watch?v=IksM2YockJk",
+  "Xiaomi 15": "https://www.youtube.com/watch?v=CHNu0Wa1Pzs",
+  "Redmi Note 14 Pro+": "https://www.youtube.com/watch?v=5s9FTlAfmGU",
+  "OnePlus 13": "https://www.youtube.com/watch?v=dJqK2lvrZNk",
+  "OnePlus 13R": "https://www.youtube.com/watch?v=pCIr0cFtvw8",
+  "Nothing Phone (3a) Pro": "https://www.youtube.com/watch?v=oVV1Sw0V30U",
+  "Nothing Phone (3a)": "https://www.youtube.com/watch?v=wr002omh-5Q",
+  "OPPO Reno13 Pro": "https://www.youtube.com/watch?v=1zrXqO1SEbw",
+  "OPPO Reno13": "https://www.youtube.com/watch?v=0nHe7vCE7og",
+  "vivo V50": "https://www.youtube.com/watch?v=iQi1CItGwAQ",
+  "vivo X200 Pro": "https://www.youtube.com/watch?v=UBdhdzu8iqE",
+  "realme 14 Pro+": "https://www.youtube.com/watch?v=vJL6DBcEISw",
+  "realme GT 7 Pro": "https://www.youtube.com/watch?v=JjsOXOBvUos",
+  "Infinix Note 40 Pro+": "https://www.youtube.com/watch?v=W9PghlPmWK8",
+  "TECNO Camon 30 Premier": "https://www.youtube.com/watch?v=SfUv5So6fIM",
 };
+
+const createYouTubeReview = (title) => ({
+  title: `${title} full video review`,
+  platform: "YouTube",
+  url: youtubeReviewUrls[title],
+});
+
+const customerProfiles = [
+  "Ali R.", "Sana K.", "Usman A.", "Hira M.", "Hamza F.", "Ayesha N.",
+  "Bilal S.", "Maham I.", "Zain H.", "Laiba A.", "Ahmed K.", "Noor F.",
+  "Saad R.", "Iqra M.", "Danish A.", "Mehwish K.", "Farhan S.", "Aiman H.",
+  "Taha R.", "Anaya F.", "Shayan A.", "Eman K.", "Rayan M.", "Minal S.",
+  "Fahad H.", "Zoya R.", "Arham K.", "Areeba N.", "Huzaifa S.", "Maryam A.",
+  "Hassan F.", "Alina K.",
+];
+
+const reviewPlatforms = ["PriceOye", "Daraz", "Google Reviews", "Facebook", "Instagram"];
+const reviewMessages = [
+  "I have been using the {phone} for a few weeks. The performance and display have been excellent for everyday use.",
+  "The {phone} feels premium, has reliable battery life, and arrived exactly as expected.",
+  "Very happy with the cameras and smooth day-to-day experience on the {phone}.",
+  "The {phone} has been a great fit for work, social apps, and media. The setup process was simple.",
+];
+
+const createCustomerReview = (title, index) => ({
+  clientName: customerProfiles[index % customerProfiles.length],
+  platform: reviewPlatforms[index % reviewPlatforms.length],
+  rating: index % 3 === 0 ? 4 : 5,
+  comment: reviewMessages[index % reviewMessages.length].replace("{phone}", title),
+  reviewedAt: new Date(2025, index % 12, (index % 27) + 1),
+  isSample: true,
+});
+
+const createCustomerReviews = (title, phoneIndex) =>
+  [0, 1, 2, 3].map((reviewIndex) =>
+    createCustomerReview(title, phoneIndex * 4 + reviewIndex)
+  );
 
 const phoneData = catalog.map(
   ([title, brand, modelVariant, storageVariant, minPrice, maxPrice, releaseYear], index) => ({
@@ -67,6 +129,7 @@ const phoneData = catalog.map(
   ],
   availabilitySummary: "Available now",
   videoReviews: [createYouTubeReview(title)],
+  customerReviews: createCustomerReviews(title, index),
   stores: [
     {
       storeName: "PriceOye",

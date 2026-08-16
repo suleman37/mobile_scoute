@@ -188,6 +188,36 @@ const Product = () => {
           </div>
         </div>
       </div>
+      {productData.customerReviews?.length > 0 && (
+        <section className="mt-16">
+          <div>
+            <h2 className="text-lg font-semibold">Customer feedback</h2>
+            <p className="mt-1 text-sm text-gray-500">
+              Seeded sample feedback from different platforms.
+            </p>
+          </div>
+          <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {productData.customerReviews.slice(0, 4).map((review, index) => (
+              <article
+                key={`${productData._id}-customer-review-${index}`}
+                className="rounded-2xl border border-gray-200 p-5"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <p className="font-semibold text-gray-900">{review.clientName}</p>
+                  <p className="whitespace-nowrap text-sm font-medium text-amber-500">
+                    {"★".repeat(review.rating || 0)}
+                    <span className="ml-1 text-gray-500">{review.rating}/5</span>
+                  </p>
+                </div>
+                <p className="mt-3 text-sm leading-6 text-gray-600">{review.comment}</p>
+                <p className="mt-4 text-xs font-medium uppercase tracking-wide text-gray-400">
+                  {review.platform}
+                </p>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
       <div className="mt-20">
         <div className="flex">
           <div className="border px-5 py-3 text-sm">Overview</div>
