@@ -115,7 +115,7 @@ const PlatformInsights = () => {
   ];
 
   return (
-    <section className="my-12 rounded-[10px] border border-[#e2e4e8] bg-[#f1f2f4] p-3 shadow-[0_15px_38px_rgba(57,72,110,0.06)] sm:p-5">
+    <section className="my-12 bg-transparent p-0">
       <div className="mb-5 flex flex-col gap-2 px-1 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#6271d8]">Market intelligence</p>
