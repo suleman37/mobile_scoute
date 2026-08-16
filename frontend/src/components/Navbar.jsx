@@ -10,7 +10,7 @@ const Navbar = () => {
   return (
     <React.Fragment>
       <header className="sticky top-0 z-[110] -mx-4 border-b border-black/[0.06] bg-[#f5f5f7]/80 px-4 backdrop-blur-xl sm:-mx-7 sm:px-7 md:-mx-[5vw] md:px-[5vw] lg:-mx-[7vw] lg:px-[7vw]">
-        <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between gap-5">
+        <div className="flex h-[72px] items-center justify-between gap-5">
           <Link to="/" className="flex items-center gap-3" aria-label="MobileScout home">
             <span className="flex h-8 w-8 items-center justify-center rounded-[11px] bg-[#1d1d1f] text-sm font-bold text-white shadow-lg shadow-black/10">M</span>
             <span className="text-[15px] font-bold tracking-[-0.03em] text-[#1d1d1f] sm:text-base">MobileScout</span>

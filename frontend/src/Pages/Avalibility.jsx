@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Title from "../components/Title";
 import NewsLetter from "../components/NewsLetter";
+import PlatformInsights from "../components/PlatformInsights";
 import { ShopContext } from "../context/ShopContext";
 
 const buildExcerpt = (product) => {
@@ -26,14 +27,26 @@ const Avalibility = () => {
   return (
     <>
       <div className="py-12">
-        <div className="mb-10 text-center">
-          <Title text1={"AVAILABILITY"} text2={"UPDATES"} />
-          <h1 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-[#1d1d1f] sm:text-4xl">Catalog updates, at a glance.</h1>
-          <p className="mx-auto mt-3 max-w-3xl text-sm leading-7 text-gray-500 sm:text-base">
+        <div className="mb-10 rounded-[2rem] bg-[#1d1d1f] px-6 py-10 text-center text-white shadow-[0_24px_50px_rgba(0,0,0,0.14)] sm:px-10 sm:py-14">
+          <Title text1={"AVAILABILITY"} text2={"UPDATES"} light />
+          <h1 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-white sm:text-5xl">Market intelligence, made clear.</h1>
+          <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-white/65 sm:text-base">
             Fresh catalog updates from the shared API response, arranged in a
             cleaner story-style layout so visitors can scan brand, pricing, and
             stock status from the new `offers` and `availabilitySummary`
             structure at a glance.
+          </p>
+        </div>
+
+        <PlatformInsights />
+
+        <div className="mb-7 mt-16 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <Title text1="LIVE" text2="CATALOG UPDATES" />
+            <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-[#1d1d1f]">Recently refreshed devices.</h2>
+          </div>
+          <p className="max-w-md text-sm leading-6 text-[#6e6e73]">
+            Review the latest availability, price snapshots and source listings in one place.
           </p>
         </div>
 

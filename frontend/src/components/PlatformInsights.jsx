@@ -88,17 +88,17 @@ const PlatformInsights = () => {
   );
 
   return (
-    <section className="my-16 rounded-[2rem] border border-black/[0.06] bg-white p-5 shadow-[0_15px_40px_rgba(0,0,0,0.04)] sm:p-8">
+    <section className="my-12 rounded-[2rem] border border-black/[0.06] bg-white p-5 shadow-[0_20px_50px_rgba(0,0,0,0.05)] sm:p-8">
       <div className="text-center">
         <Title text1="MARKETPLACE" text2="INSIGHTS" />
-        <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-[#1d1d1f] sm:text-4xl">Make a more confident choice.</h2>
+        <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-[#1d1d1f] sm:text-4xl">Your mobile market dashboard.</h2>
         <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-[#6e6e73]">
           Compare average listed prices and customer-feedback scores across platforms.
         </p>
       </div>
 
       <div className="mt-8 grid gap-5 md:grid-cols-2">
-        <div className="rounded-2xl border border-gray-200 bg-white p-5">
+        <div className="rounded-[1.5rem] border border-black/[0.07] bg-[#fbfbfc] p-5 sm:p-6">
           <div className="flex items-start justify-between gap-4">
             <div>
               <h3 className="font-semibold text-gray-900">Price comparison</h3>
@@ -127,7 +127,7 @@ const PlatformInsights = () => {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-gray-200 bg-white p-5">
+        <div className="rounded-[1.5rem] border border-black/[0.07] bg-[#fbfbfc] p-5 sm:p-6">
           <div className="flex items-start justify-between gap-4">
             <div>
               <h3 className="font-semibold text-gray-900">Customer preference</h3>
@@ -161,7 +161,7 @@ const PlatformInsights = () => {
         </div>
       </div>
       {insights.topSellingPhones.length > 0 && (
-        <div className="mt-5 rounded-2xl border border-gray-200 bg-white p-5">
+        <div className="mt-5 rounded-[1.5rem] border border-black/[0.07] bg-[#fbfbfc] p-5 sm:p-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <h3 className="font-semibold text-gray-900">Top 3 best-selling mobiles: price comparison</h3>
