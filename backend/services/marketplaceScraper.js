@@ -92,6 +92,67 @@ const extractJsonLd = (html) => {
   });
 };
 
+const readMeta = (html, attribute, value) => {
+  const expression = new RegExp(`<meta[^>]+${attribute}=["']${value}["'][^>]+content=["']([^"']+)["'][^>]*>`, "i");
+  return html.match(expression)?.[1] || null;
+};
+
+const decodeHtmlText = (value = "") =>
+  value
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(Number.parseInt(code, 16)))
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number.parseInt(code, 10)))
+    .replace(/&amp;/gi, "&")
+    .replace(/&quot;/gi, '"')
+    .replace(/&#39;/gi, "'");
+
+const extractShophiveProduct = (html, productUrl) => {
+  const title = decodeHtmlText(readMeta(html, "property", "og:title") || html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1]?.replace(/<[^>]+>/g, "").trim());
+  const price = parsePrice(html.match(/data-price-amount=["']([^"']+)["'][^>]+data-price-type=["']finalPrice/i)?.[1]);
+  const image = readMeta(html, "property", "og:image");
+  const brand = html.match(/class=["']brand-link["'][^>]+title=["']([^"']+)["']/i)?.[1] || "Unknown";
+  const inStock = /class=["'][^"']*stock available[^"']*["']/i.test(html);
+
+  if (!title || price === null) return null;
+  return {
+    title,
+    brand,
+    images: image ? [image] : [],
+    offer: {
+      storeName: "Shophive",
+      sellerName: "Shophive",
+      price,
+      currency: readMeta(html, "property", "product:price:currency") || "PKR",
+      availability: inStock ? "In stock" : "Check source",
+      productUrl,
+      lastCheckedAt: new Date(),
+    },
+    reviews: [],
+  };
+};
+
+const extractTelemartProduct = (html, productUrl) => {
+  const title = decodeHtmlText(readMeta(html, "property", "og:title"));
+  const price = parsePrice(readMeta(html, "property", "og:price:amount"));
+  const image = readMeta(html, "property", "og:image");
+
+  if (!title || price === null) return null;
+  return {
+    title,
+    brand: title.split(/\s+/)[0] || "Unknown",
+    images: image ? [image] : [],
+    offer: {
+      storeName: "Telemart",
+      sellerName: "Telemart",
+      price,
+      currency: readMeta(html, "property", "og:price:currency") || "PKR",
+      availability: /sold out/i.test(html) ? "Out of stock" : "Check source",
+      productUrl,
+      lastCheckedAt: new Date(),
+    },
+    reviews: [],
+  };
+};
+
 const getSourceDefinition = (productUrl) => {
   const host = new URL(productUrl).hostname.toLowerCase();
   return sourceDefinitions.find((source) => source.hosts.includes(host)) || null;
@@ -125,10 +186,10 @@ const fetchProductPage = async (productUrl) => {
 };
 
 const extractCatalogProductUrls = (html, catalogUrl) => {
-  const catalogOrigin = new URL(catalogUrl).origin;
+  const catalog = new URL(catalogUrl);
+  const catalogOrigin = catalog.origin;
   const hrefs = [...html.matchAll(/href=["']([^"']+)["']/gi)].map((match) => match[1]);
-
-  return hrefs
+  const absoluteHrefs = hrefs
     .map((href) => {
       try {
         return new URL(href, catalogOrigin).toString();
@@ -136,8 +197,10 @@ const extractCatalogProductUrls = (html, catalogUrl) => {
         return null;
       }
     })
-    .filter(Boolean)
-    .filter((url) => {
+    .filter(Boolean);
+
+  if (["priceoye.pk", "www.priceoye.pk"].includes(catalog.hostname)) {
+    return absoluteHrefs.filter((url) => {
       const parsed = new URL(url);
       return (
         parsed.hostname === "priceoye.pk" &&
@@ -146,24 +209,48 @@ const extractCatalogProductUrls = (html, catalogUrl) => {
         !parsed.pathname.includes("/compare/")
       );
     });
+  }
+
+  if (["telemart.pk", "www.telemart.pk"].includes(catalog.hostname)) {
+    return [...html.matchAll(/\\"url\\":\\"(\\\/products\\\/[^\\"]+)/g)]
+      .map((match) => `https://telemart.pk${match[1].replaceAll('\\/', '/')}`);
+  }
+
+  if (["shophive.com", "www.shophive.com"].includes(catalog.hostname)) {
+    return absoluteHrefs.filter((url) => {
+      const parsed = new URL(url);
+      return parsed.hostname.endsWith("shophive.com") && /^\/[^/]+\/$/.test(parsed.pathname) && !["mobile-phones", "catalogsearch", "prices", "cart", "checkout", "customer"].includes(parsed.pathname.split("/")[1]);
+    });
+  }
+
+  if (["mega.pk", "www.mega.pk"].includes(catalog.hostname)) {
+    return absoluteHrefs.filter((url) => /\/mobiles_products\/\d+\//.test(new URL(url).pathname));
+  }
+
+  return [];
 };
 
-export const discoverMarketplaceProductUrls = async (catalogUrls, limit = 40) => {
-  const urls = [];
+export const discoverMarketplaceProductUrls = async (catalogUrls, perPlatformLimit = 35) => {
+  const urlsByHost = new Map();
 
-  for (const catalogUrl of [...new Set(catalogUrls)].slice(0, 12)) {
+  for (const catalogUrl of [...new Set(catalogUrls)].slice(0, 20)) {
     const parsed = new URL(catalogUrl);
-    if (parsed.protocol !== "https:" || !["priceoye.pk", "www.priceoye.pk"].includes(parsed.hostname)) {
-      throw new Error("Discovery only supports approved PriceOye public catalog URLs.");
+    if (parsed.protocol !== "https:" || !sourceDefinitions.some((source) => source.hosts.includes(parsed.hostname))) {
+      throw new Error("Discovery only supports approved public marketplace catalog URLs.");
     }
 
-    const html = await fetchProductPage(catalogUrl);
-    urls.push(...extractCatalogProductUrls(html, catalogUrl));
-    if (new Set(urls).size >= limit) break;
+    try {
+      const html = await fetchProductPage(catalogUrl);
+      const sourceUrls = urlsByHost.get(parsed.hostname) || [];
+      sourceUrls.push(...extractCatalogProductUrls(html, catalogUrl));
+      urlsByHost.set(parsed.hostname, sourceUrls);
+    } catch (error) {
+      console.warn(`Catalog discovery skipped ${catalogUrl}: ${error.message}`);
+    }
     await sleep(800);
   }
 
-  return [...new Set(urls)].slice(0, limit);
+  return [...urlsByHost.values()].flatMap((urls) => [...new Set(urls)].slice(0, perPlatformLimit));
 };
 
 const getYouTubeReview = async (title) => {
@@ -209,6 +296,16 @@ export const scrapeProductUrl = async (productUrl) => {
   const source = assertSupportedUrl(productUrl);
   const html = await fetchProductPage(productUrl);
   const product = extractJsonLd(html).map(findProductNode).find(Boolean);
+
+  if (!product && source.name === "Shophive") {
+    const fallbackProduct = extractShophiveProduct(html, productUrl);
+    if (fallbackProduct) return fallbackProduct;
+  }
+
+  if (!product && source.name === "Telemart") {
+    const fallbackProduct = extractTelemartProduct(html, productUrl);
+    if (fallbackProduct) return fallbackProduct;
+  }
 
   if (!product?.name) {
     throw new Error("No public Product structured data was found on this page.");
@@ -275,7 +372,7 @@ export const syncMarketplaceUrls = async (urls) => {
   }
 
   const results = [];
-  for (const productUrl of [...new Set(urls)].slice(0, 40)) {
+  for (const productUrl of [...new Set(urls)].slice(0, 150)) {
     try {
       results.push({ status: "fulfilled", value: await scrapeProductUrl(productUrl) });
     } catch (error) {

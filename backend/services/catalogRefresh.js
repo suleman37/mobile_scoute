@@ -15,7 +15,7 @@ export const refreshMarketplaceCatalog = async () => {
   try {
     const sourceUrls = parseUrls(process.env.SCRAPER_SOURCE_URLS);
     const catalogUrls = parseUrls(process.env.SCRAPER_DISCOVERY_URLS);
-    const discoveredUrls = catalogUrls.length ? await discoverMarketplaceProductUrls(catalogUrls, 40) : [];
+    const discoveredUrls = catalogUrls.length ? await discoverMarketplaceProductUrls(catalogUrls, 140) : [];
     const result = await syncMarketplaceUrls([...new Set([...sourceUrls, ...discoveredUrls])]);
     return { discoveredCount: discoveredUrls.length, ...result };
   } finally {

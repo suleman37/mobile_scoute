@@ -8,8 +8,7 @@ const LatestCollection = () => {
   const [latestProduct, setlatestProduct] = useState([]);
   useEffect(() => {
     const newestProducts = [...products]
-      .sort((a, b) => b.date - a.date)
-      .slice(0, 20);
+      .sort((a, b) => b.date - a.date);
     setlatestProduct(newestProducts);
   }, [products]);
 
@@ -18,11 +17,11 @@ const LatestCollection = () => {
       <section className="my-16">
         <div className="flex flex-col gap-3 py-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-          <Title text1={"LATEST"} text2={"SYNC"} />
-          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-[#1d1d1f] sm:text-4xl">Fresh from the catalog.</h2>
+          <Title text1={"LIVE"} text2={"CATALOG"} />
+          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-[#1d1d1f] sm:text-4xl">All mobiles, live from the catalog.</h2>
           </div>
           <p className="max-w-md text-sm leading-6 text-[#6e6e73]">
-            Browse newly synced mobiles with current store prices, availability and model details.
+            Browse every synced mobile with current store prices, availability and model details.
           </p>
         </div>
         {latestProduct.length > 0 && (
