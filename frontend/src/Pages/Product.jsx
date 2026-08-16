@@ -167,6 +167,24 @@ const Product = () => {
                 </div>
               ))}
             </div>
+            {productData.videoReviews?.[0]?.url && (
+              <a
+                className="mt-4 flex items-center justify-between rounded-2xl border border-red-100 bg-red-50/40 p-4 transition-colors hover:border-red-500"
+                href={productData.videoReviews[0].url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span>
+                  <span className="block font-semibold text-gray-900">
+                    Watch {productData.name} video review
+                  </span>
+                  <span className="mt-1 block text-sm text-gray-500">
+                    YouTube
+                  </span>
+                </span>
+                <span className="text-sm font-medium text-red-600">Watch on YouTube →</span>
+              </a>
+            )}
           </div>
         </div>
       </div>

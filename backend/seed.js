@@ -38,6 +38,16 @@ const catalog = [
   ["TECNO Camon 30 Premier", "TECNO", "Camon 30 Premier", "512GB", 149999, 159999, 2024],
 ];
 
+const createYouTubeReview = (title) => {
+  const searchQuery = encodeURIComponent(`${title} full review`);
+
+  return {
+    title: `${title} video review`,
+    platform: "YouTube",
+    url: `https://www.youtube.com/results?search_query=${searchQuery}`,
+  };
+};
+
 const phoneData = catalog.map(
   ([title, brand, modelVariant, storageVariant, minPrice, maxPrice, releaseYear], index) => ({
   title,
@@ -56,6 +66,7 @@ const phoneData = catalog.map(
     `http://localhost:${process.env.PORT || 5000}/images/seed-phones/phone-${String(index + 1).padStart(2, "0")}.png`,
   ],
   availabilitySummary: "Available now",
+  videoReviews: [createYouTubeReview(title)],
   stores: [
     {
       storeName: "PriceOye",
