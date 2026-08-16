@@ -239,17 +239,24 @@ const Product = () => {
             {productData.customerReviews.map((review, index) => (
               <article
                 key={`${productData._id}-customer-review-${index}`}
-                className="w-full shrink-0 rounded-[10px] border border-gray-200 p-5 sm:w-[calc((100%-1rem)/2)] xl:w-[calc((100%-3rem)/4)]"
+                className="flex min-h-[220px] w-full shrink-0 flex-col rounded-[10px] border border-black/[0.07] bg-white p-5 shadow-[0_8px_18px_rgba(17,17,17,0.04)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_28px_rgba(17,17,17,0.09)] sm:w-[calc((100%-1rem)/2)] xl:w-[calc((100%-3rem)/4)]"
               >
                 <div className="flex items-center justify-between gap-3">
-                  <p className="font-semibold text-gray-900">{review.clientName}</p>
-                  <p className="whitespace-nowrap text-sm font-medium text-amber-500">
-                    {"★".repeat(review.rating || 0)}
-                    <span className="ml-1 text-gray-500">{review.rating}/5</span>
-                  </p>
+                  <div className="flex min-w-0 items-center gap-3">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-[10px] bg-[#eef3ff] text-sm font-bold text-[#3564d8]">
+                      {review.clientName?.charAt(0) || "U"}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="truncate font-semibold text-[#1d1d1f]">{review.clientName}</p>
+                      <p className="mt-0.5 text-xs text-[#6e6e73]">Catalog feedback</p>
+                    </div>
+                  </div>
+                  <span className="whitespace-nowrap rounded-[10px] bg-[#fff7e6] px-2 py-1 text-xs font-bold text-[#d58a00]">
+                    {review.rating}/5 ★
+                  </span>
                 </div>
-                <p className="mt-3 text-sm leading-6 text-gray-600">{review.comment}</p>
-                <p className="mt-4 text-xs font-medium uppercase tracking-wide text-gray-400">
+                <p className="mt-5 text-sm leading-6 text-[#596275]">“{review.comment}”</p>
+                <p className="mt-auto pt-5 text-[11px] font-bold uppercase tracking-[0.12em] text-[#8a95a8]">
                   {review.platform}
                 </p>
               </article>
