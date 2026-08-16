@@ -41,7 +41,7 @@ const BestSeller = () => {
 
   return (
     <>
-      <section className="my-16 overflow-hidden rounded-[2rem] bg-[#e8edf9] px-5 py-10 sm:px-8 sm:py-14">
+      <section className="my-16 overflow-hidden rounded-[10px] bg-[#f1f2f4] px-5 py-10 sm:px-8 sm:py-14">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
           <Title text1={"NEWER"} text2={"GENERATIONS"} />

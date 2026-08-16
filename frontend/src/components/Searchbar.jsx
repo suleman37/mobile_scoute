@@ -137,7 +137,7 @@ const Searchbar = () => {
       }`}
     >
       <div
-        className={`relative z-[121] w-full max-w-lg mx-auto p-4 bg-white rounded-lg shadow-lg transform transition-transform duration-300 ${
+        className={`relative z-[121] w-full max-w-lg mx-auto p-4 bg-white rounded-[10px] shadow-lg transform transition-transform duration-300 ${
           showsearch && isVisible ? "translate-y-0" : "-translate-y-full"
         }`}
         style={{ border: "1px solid gray" }}
@@ -155,11 +155,11 @@ const Searchbar = () => {
             value={search}
             onChange={handleInputChange}
             placeholder="Search product name, brand, storage, or variant..."
-            className="w-full px-6 py-3 pr-28 text-gray-700 bg-transparent border border-gray-300 rounded-full shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-6 py-3 pr-28 text-gray-700 bg-transparent border border-gray-300 rounded-[10px] shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <button
             type="button"
-            className={`absolute right-14 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full transition-colors ${
+            className={`absolute right-14 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-[10px] transition-colors ${
               isListening ? "animate-pulse text-red-600" : "text-gray-600 hover:text-red-600"
             }`}
             onClick={startVoiceSearch}
@@ -189,7 +189,7 @@ const Searchbar = () => {
           <p className="mt-3 text-sm text-red-600">{searchMessage}</p>
         )}
         {matchedProducts.length > 0 && (
-          <div className="relative z-[122] mt-4 overflow-hidden rounded-2xl border border-gray-200 bg-white">
+          <div className="relative z-[122] mt-4 overflow-hidden rounded-[10px] border border-gray-200 bg-white">
             {matchedProducts.map((product) => (
               <button
                 type="button"
@@ -197,7 +197,7 @@ const Searchbar = () => {
                 className="flex w-full items-center gap-3 border-b border-gray-100 px-4 py-3 text-left last:border-b-0 hover:bg-gray-50"
                 onClick={() => openProduct(product)}
               >
-                <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg bg-gray-100">
+                <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-[10px] bg-gray-100">
                   {product.image?.[0] ? (
                     <img
                       src={product.image[0]}

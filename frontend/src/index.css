@@ -27,6 +27,33 @@ select {
   -webkit-tap-highlight-color: transparent;
 }
 
+@keyframes brand-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-50% - 0.5rem));
+  }
+}
+
+.brand-marquee {
+  animation: brand-marquee 28s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-marquee {
+    animation: none;
+  }
+}
+
+input,
+select,
+textarea,
+button {
+  border-radius: 10px !important;
+}
+
 .prata-regular {
   font-family: "Playfair Display", serif;
   font-weight: 500;

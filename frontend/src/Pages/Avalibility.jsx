@@ -27,7 +27,7 @@ const Avalibility = () => {
   return (
     <>
       <div className="py-12">
-        <div className="mb-10 rounded-[2rem] bg-[#1d1d1f] px-6 py-10 text-center text-white shadow-[0_24px_50px_rgba(0,0,0,0.14)] sm:px-10 sm:py-14">
+        <div className="mb-10 rounded-[10px] bg-[#1d1d1f] px-6 py-10 text-center text-white shadow-[0_24px_50px_rgba(0,0,0,0.14)] sm:px-10 sm:py-14">
           <Title text1={"AVAILABILITY"} text2={"UPDATES"} light />
           <h1 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-white sm:text-5xl">Market intelligence, made clear.</h1>
           <p className="mx-auto mt-4 max-w-3xl text-sm leading-7 text-white/65 sm:text-base">
@@ -51,13 +51,13 @@ const Avalibility = () => {
         </div>
 
         {productsLoading && (
-          <div className="rounded-2xl border border-gray-200 px-6 py-10 text-sm text-gray-600">
+          <div className="rounded-[10px] border border-gray-200 px-6 py-10 text-sm text-gray-600">
             Loading availability updates...
           </div>
         )}
 
         {!productsLoading && productsError && (
-          <div className="rounded-2xl border border-red-200 bg-red-50 px-6 py-10 text-sm text-red-700">
+          <div className="rounded-[10px] border border-red-200 bg-red-50 px-6 py-10 text-sm text-red-700">
             {productsError}
           </div>
         )}
@@ -68,7 +68,7 @@ const Avalibility = () => {
               <Link
                 key={product._id}
                 to={`/product/${product._id}`}
-                className="group grid overflow-hidden rounded-[1.5rem] border border-black/[0.07] bg-white transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(17,17,17,0.08)] md:grid-cols-[24%_76%]"
+                className="group grid overflow-hidden rounded-[10px] border border-black/[0.07] bg-white transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(17,17,17,0.08)] md:grid-cols-[24%_76%]"
               >
                 <div className="flex h-[220px] items-center justify-center bg-[#f5f5f7] p-4">
                   <img
@@ -93,7 +93,7 @@ const Avalibility = () => {
         )}
 
         {!productsLoading && !productsError && latestEntries.length === 0 && (
-          <div className="rounded-2xl border border-gray-200 px-6 py-10 text-sm text-gray-600">
+          <div className="rounded-[10px] border border-gray-200 px-6 py-10 text-sm text-gray-600">
             No availability updates are available right now.
           </div>
         )}

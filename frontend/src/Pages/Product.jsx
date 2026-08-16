@@ -50,7 +50,7 @@ const Product = () => {
 
   return productData ? (
     <div className="py-10 transition-opacity duration-500 ease-in opacity-100">
-      <div className="flex flex-col gap-8 rounded-[2rem] border border-black/[0.07] bg-white p-4 shadow-[0_18px_45px_rgba(0,0,0,0.04)] sm:flex-row sm:gap-10 sm:p-8">
+      <div className="flex flex-col gap-8 rounded-[10px] border border-black/[0.07] bg-white p-4 shadow-[0_18px_45px_rgba(0,0,0,0.04)] sm:flex-row sm:gap-10 sm:p-8">
         <div className="flex flex-1 flex-col-reverse gap-3 sm:flex-row">
           <div className="flex w-full justify-between overflow-x-auto sm:w-[18.7%] sm:flex-col sm:justify-normal sm:overflow-y-scroll">
             {(productData.image || []).map((item, index) => (
@@ -58,16 +58,16 @@ const Product = () => {
                 src={item}
                 alt={`Product ${index + 1}`}
                 key={index}
-                className="w-[24%] cursor-pointer rounded-xl border border-black/[0.06] bg-[#f5f5f7] p-1 sm:mb-3 sm:w-full"
+                className="w-[24%] cursor-pointer rounded-[10px] border border-black/[0.06] bg-[#f5f5f7] p-1 sm:mb-3 sm:w-full"
                 onClick={() => setImage(item)}
               />
             ))}
           </div>
-          <div className="flex w-full items-center justify-center rounded-[1.5rem] bg-[#f5f5f7] p-4 sm:w-[80%]">
+          <div className="flex w-full items-center justify-center rounded-[10px] bg-[#f5f5f7] p-4 sm:w-[80%]">
             {image ? (
-              <img src={image} alt="Selected product" className="h-auto w-full rounded-[1.2rem]" />
+              <img src={image} alt="Selected product" className="h-auto w-full rounded-[10px]" />
             ) : (
-              <div className="flex min-h-[420px] items-center justify-center rounded-2xl bg-[#f7f7f7] text-sm uppercase tracking-[0.25em] text-gray-400">
+              <div className="flex min-h-[420px] items-center justify-center rounded-[10px] bg-[#f7f7f7] text-sm uppercase tracking-[0.25em] text-gray-400">
                 No image available
               </div>
             )}
@@ -86,19 +86,19 @@ const Product = () => {
             sync timestamps, price range, store listings, and availability data.
           </p>
           <div className="mt-7 grid grid-cols-2 gap-3 md:w-4/5">
-            <div className="rounded-xl border border-black/[0.07] bg-[#fbfbfc] p-3">
+            <div className="rounded-[10px] border border-black/[0.07] bg-[#fbfbfc] p-3">
               <p className="text-xs uppercase tracking-wide text-gray-400">
                 Brand
               </p>
               <p className="text-sm text-gray-700 mt-1">{productData.brand}</p>
             </div>
-            <div className="border border-gray-200 rounded-lg p-3">
+            <div className="border border-gray-200 rounded-[10px] p-3">
               <p className="text-xs uppercase tracking-wide text-gray-400">
                 Slug
               </p>
               <p className="text-sm text-gray-700 mt-1">{productData.slug || "Not available"}</p>
             </div>
-            <div className="border border-gray-200 rounded-lg p-3">
+            <div className="border border-gray-200 rounded-[10px] p-3">
               <p className="text-xs uppercase tracking-wide text-gray-400">
                 Lowest Price
               </p>
@@ -106,7 +106,7 @@ const Product = () => {
                 {productData.formattedMinPrice || "Price not listed"}
               </p>
             </div>
-            <div className="border border-gray-200 rounded-lg p-3">
+            <div className="border border-gray-200 rounded-[10px] p-3">
               <p className="text-xs uppercase tracking-wide text-gray-400">
                 Highest Price
               </p>
@@ -114,7 +114,7 @@ const Product = () => {
                 {productData.formattedMaxPrice || "Price not listed"}
               </p>
             </div>
-            <div className="border border-gray-200 rounded-lg p-3">
+            <div className="border border-gray-200 rounded-[10px] p-3">
               <p className="text-xs uppercase tracking-wide text-gray-400">
                 Offer Count
               </p>
@@ -122,7 +122,7 @@ const Product = () => {
                 {productData.offerCount || productData.stores.length}
               </p>
             </div>
-            <div className="border border-gray-200 rounded-lg p-3">
+            <div className="border border-gray-200 rounded-[10px] p-3">
               <p className="text-xs uppercase tracking-wide text-gray-400">
                 Last Synced
               </p>
@@ -130,7 +130,7 @@ const Product = () => {
                 {formatDate(productData.lastSyncedAt)}
               </p>
             </div>
-            <div className="border border-gray-200 rounded-lg p-3">
+            <div className="border border-gray-200 rounded-[10px] p-3">
               <p className="text-xs uppercase tracking-wide text-gray-400">
                 Sheet Updated
               </p>
@@ -138,7 +138,7 @@ const Product = () => {
                 {formatDate(productData.sheetUpdatedAt)}
               </p>
             </div>
-            <div className="border border-gray-200 rounded-lg p-3">
+            <div className="border border-gray-200 rounded-[10px] p-3">
               <p className="text-xs uppercase tracking-wide text-gray-400">
                 Sync Batch
               </p>
@@ -153,7 +153,7 @@ const Product = () => {
               {productData.stores.map((store) => (
                 <div
                   key={`${productData._id}-${store.storeName}-${store.productUrl || "store"}`}
-                  className="rounded-2xl border border-gray-200 p-4"
+                  className="rounded-[10px] border border-gray-200 p-4"
                 >
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
@@ -184,7 +184,7 @@ const Product = () => {
             </div>
             {productData.videoReviews?.[0]?.url && (
               <a
-                className="mt-4 flex items-center justify-between rounded-2xl border border-red-100 bg-red-50/40 p-4 transition-colors hover:border-red-500"
+                className="mt-4 flex items-center justify-between rounded-[10px] border border-red-100 bg-red-50/40 p-4 transition-colors hover:border-red-500"
                 href={productData.videoReviews[0].url}
                 target="_blank"
                 rel="noreferrer"
@@ -217,7 +217,7 @@ const Product = () => {
                 type="button"
                 onClick={() => scrollCustomerReviews(-1)}
                 aria-label="Show previous customer reviews"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-gray-700 transition-colors hover:border-black hover:bg-black hover:text-white"
+                className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-gray-200 text-gray-700 transition-colors hover:border-black hover:bg-black hover:text-white"
               >
                 <svg aria-hidden="true" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path d="m15 18-6-6 6-6" />
@@ -227,7 +227,7 @@ const Product = () => {
                 type="button"
                 onClick={() => scrollCustomerReviews(1)}
                 aria-label="Show next customer reviews"
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-gray-700 transition-colors hover:border-black hover:bg-black hover:text-white"
+                className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-gray-200 text-gray-700 transition-colors hover:border-black hover:bg-black hover:text-white"
               >
                 <svg aria-hidden="true" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path d="m9 18 6-6-6-6" />
@@ -239,7 +239,7 @@ const Product = () => {
             {productData.customerReviews.map((review, index) => (
               <article
                 key={`${productData._id}-customer-review-${index}`}
-                className="w-full shrink-0 rounded-2xl border border-gray-200 p-5 sm:w-[calc((100%-1rem)/2)] xl:w-[calc((100%-3rem)/4)]"
+                className="w-full shrink-0 rounded-[10px] border border-gray-200 p-5 sm:w-[calc((100%-1rem)/2)] xl:w-[calc((100%-3rem)/4)]"
               >
                 <div className="flex items-center justify-between gap-3">
                   <p className="font-semibold text-gray-900">{review.clientName}</p>
@@ -280,7 +280,7 @@ const Product = () => {
     </div>
   ) : (
     <div className="border-t pt-16">
-      <div className="rounded-lg border border-gray-200 px-6 py-10 text-sm text-gray-600">
+      <div className="rounded-[10px] border border-gray-200 px-6 py-10 text-sm text-gray-600">
         This API entry is not available in the current frontend dataset.
       </div>
     </div>

@@ -14,10 +14,10 @@ const ProductItem = ({
   return (
     <Link
       to={`/product/${_id}`}
-      className="group block overflow-hidden rounded-[1.5rem] border border-black/[0.07] bg-white p-2.5 text-[#1d1d1f] shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_36px_rgba(0,0,0,0.1)]"
+      className="group block overflow-hidden rounded-[10px] border border-black/[0.07] bg-white p-2.5 text-[#1d1d1f] shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_36px_rgba(0,0,0,0.1)]"
     >
-      <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-[1.15rem] bg-[#f5f5f7] p-5">
-        <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#6e6e73] shadow-sm">
+      <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-[10px] bg-[#f5f5f7] p-5">
+        <span className="absolute left-3 top-3 rounded-[10px] bg-white/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#6e6e73] shadow-sm">
           {releaseYear || "New"}
         </span>
         {image?.[0] ? (

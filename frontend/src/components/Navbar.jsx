@@ -16,20 +16,20 @@ const Navbar = () => {
             <span className="text-[15px] font-bold tracking-[-0.03em] text-[#1d1d1f] sm:text-base">MobileScout</span>
           </Link>
 
-        <ul className="hidden items-center gap-1 rounded-full border border-black/[0.07] bg-white/75 p-1 text-[13px] font-medium text-[#424245] shadow-sm lg:flex">
-          <NavLink to="/" className="rounded-full px-4 py-2 transition hover:bg-[#f5f5f7]">Discover</NavLink>
-          <NavLink to="/iphone" className="rounded-full px-4 py-2 transition hover:bg-[#f5f5f7]">iPhone</NavLink>
-          <NavLink to="/android" className="rounded-full px-4 py-2 transition hover:bg-[#f5f5f7]">Android</NavLink>
-          <NavLink to="/avalibility" className="rounded-full px-4 py-2 transition hover:bg-[#f5f5f7]">Availability</NavLink>
+        <ul className="hidden items-center gap-1 rounded-[10px] border border-black/[0.07] bg-white/75 p-1 text-[13px] font-medium text-[#424245] shadow-sm lg:flex">
+          <NavLink to="/" className="rounded-[10px] px-4 py-2 transition hover:bg-[#f5f5f7]">Discover</NavLink>
+          <NavLink to="/iphone" className="rounded-[10px] px-4 py-2 transition hover:bg-[#f5f5f7]">iPhone</NavLink>
+          <NavLink to="/android" className="rounded-[10px] px-4 py-2 transition hover:bg-[#f5f5f7]">Android</NavLink>
+          <NavLink to="/avalibility" className="rounded-[10px] px-4 py-2 transition hover:bg-[#f5f5f7]">Availability</NavLink>
         </ul>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <div className="hidden max-w-48 truncate rounded-full border border-black/[0.07] bg-white px-3 py-2 text-[11px] font-medium text-[#6e6e73] md:block">
+          <div className="hidden max-w-48 truncate rounded-[10px] border border-black/[0.07] bg-white px-3 py-2 text-[11px] font-medium text-[#6e6e73] md:block">
             {currentLocation}
           </div>
           <button
             type="button"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-black/[0.08] bg-white text-[#1d1d1f] transition hover:scale-105 hover:bg-[#1d1d1f] hover:text-white"
+            className="flex h-9 w-9 items-center justify-center rounded-[10px] border border-black/[0.08] bg-white text-[#1d1d1f] transition hover:scale-105 hover:bg-[#1d1d1f] hover:text-white"
             aria-label="Search catalog"
             onClick={() => setShowSearch(true)}
           >
@@ -52,11 +52,11 @@ const Navbar = () => {
           }`}
         >
           <div className="flex flex-col px-4 text-sm font-medium text-[#424245]">
-            <div className="mb-2 rounded-xl bg-[#f5f5f7] px-4 py-3 text-xs text-[#6e6e73]">{currentLocation}</div>
-            <NavLink className="rounded-xl px-4 py-3 hover:bg-[#f5f5f7]" onClick={() => setVisible(false)} to="/">Discover</NavLink>
-            <NavLink className="rounded-xl px-4 py-3 hover:bg-[#f5f5f7]" onClick={() => setVisible(false)} to="/iphone">iPhone</NavLink>
-            <NavLink className="rounded-xl px-4 py-3 hover:bg-[#f5f5f7]" onClick={() => setVisible(false)} to="/android">Android</NavLink>
-            <NavLink className="rounded-xl px-4 py-3 hover:bg-[#f5f5f7]" onClick={() => setVisible(false)} to="/avalibility">Availability</NavLink>
+            <div className="mb-2 rounded-[10px] bg-[#f5f5f7] px-4 py-3 text-xs text-[#6e6e73]">{currentLocation}</div>
+            <NavLink className="rounded-[10px] px-4 py-3 hover:bg-[#f5f5f7]" onClick={() => setVisible(false)} to="/">Discover</NavLink>
+            <NavLink className="rounded-[10px] px-4 py-3 hover:bg-[#f5f5f7]" onClick={() => setVisible(false)} to="/iphone">iPhone</NavLink>
+            <NavLink className="rounded-[10px] px-4 py-3 hover:bg-[#f5f5f7]" onClick={() => setVisible(false)} to="/android">Android</NavLink>
+            <NavLink className="rounded-[10px] px-4 py-3 hover:bg-[#f5f5f7]" onClick={() => setVisible(false)} to="/avalibility">Availability</NavLink>
           </div>
         </div>
       </header>
