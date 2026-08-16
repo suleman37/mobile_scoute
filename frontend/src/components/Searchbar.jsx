@@ -159,14 +159,24 @@ const Searchbar = () => {
           />
           <button
             type="button"
-            className={`absolute right-14 top-1/2 -translate-y-1/2 text-lg transition-colors ${
+            className={`absolute right-14 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full transition-colors ${
               isListening ? "animate-pulse text-red-600" : "text-gray-600 hover:text-red-600"
             }`}
             onClick={startVoiceSearch}
             aria-label={isListening ? "Listening for voice search" : "Start voice search"}
             title={isListening ? "Listening" : "Voice search"}
           >
-            🎙
+            <svg
+              aria-hidden="true"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <rect x="9" y="3" width="6" height="11" rx="3" />
+              <path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8" />
+            </svg>
           </button>
           <button
             type="submit"
