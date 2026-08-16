@@ -3,7 +3,8 @@ import axios from "axios";
 
 export const ShopContext = createContext(null);
 
-const PAKISTAN_IPHONES_API = "http://localhost:5000/api/pakistan-iphones";
+const API_BASE_URL = (process.env.REACT_APP_API_URL || "http://localhost:5000").replace(/\/$/, "");
+const PAKISTAN_IPHONES_API = `${API_BASE_URL}/api/pakistan-iphones`;
 const currencyFormatter = new Intl.NumberFormat("en-PK");
 
 const isFiniteNumber = (value) =>

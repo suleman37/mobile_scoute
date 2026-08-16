@@ -7,16 +7,35 @@ import { startCatalogRefreshSchedule } from './services/catalogRefresh.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
+let databaseConnection;
+
+const ensureDatabaseConnection = async () => {
+  if (!databaseConnection) {
+    databaseConnection = ConnectDB().catch((error) => {
+      databaseConnection = undefined;
+      throw error;
+    });
+  }
+  await databaseConnection;
+};
 
 app.use(cors());
 app.use(express.json());
 app.use('/images', express.static('public'));
+app.use(async (_req, _res, next) => {
+  try {
+    await ensureDatabaseConnection();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
 
 app.use('/api', mobileRoute);
  
 const startServer = async () => {
   try {
-    await ConnectDB();
+    await ensureDatabaseConnection();
     app.listen(port, () => {
       console.log(`Server is Running on port ${port}`);
       startCatalogRefreshSchedule();
@@ -27,4 +46,6 @@ const startServer = async () => {
   }
 };
 
-startServer();
+if (!process.env.VERCEL) startServer();
+
+export default app;
