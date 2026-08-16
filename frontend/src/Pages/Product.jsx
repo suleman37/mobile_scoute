@@ -1,0 +1,203 @@
+import React, { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { ShopContext } from "../context/ShopContext";
+import RelatedProduct from "../components/RelatedProduct";
+
+const formatDate = (value) => {
+  if (!value) {
+    return "Not available";
+  }
+
+  const date = new Date(value);
+
+  if (Number.isNaN(date.getTime())) {
+    return "Not available";
+  }
+
+  return date.toLocaleString();
+};
+
+const Product = () => {
+  const { id } = useParams();
+  const { products } = useContext(ShopContext);
+  const [productData, setProductData] = useState(null);
+  const [image, setImage] = useState("");
+
+  useEffect(() => {
+    const product = products.find((item) => item._id === id);
+    if (product) {
+      setProductData(product);
+      setImage(product.image?.[0] || "");
+    } else {
+      setProductData(null);
+      setImage("");
+    }
+  }, [id, products]);
+
+  return productData ? (
+    <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
+      <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
+        <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
+          <div className="flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
+            {(productData.image || []).map((item, index) => (
+              <img
+                src={item}
+                alt={`Product ${index + 1}`}
+                key={index}
+                className="w-[24%] sm:w-full sm:mb-3 flex-shink-0 cursor-pointer"
+                onClick={() => setImage(item)}
+              />
+            ))}
+          </div>
+          <div className="w-full sm:w-[80%]">
+            {image ? (
+              <img src={image} alt="Selected product" className="w-full h-auto" />
+            ) : (
+              <div className="flex min-h-[420px] items-center justify-center rounded-2xl bg-[#f7f7f7] text-sm uppercase tracking-[0.25em] text-gray-400">
+                No image available
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="flex-1">
+          <h1 className="font-medium text-2xl mt-2">{productData.name}</h1>
+          <p className="mt-2 text-sm uppercase tracking-[0.2em] text-gray-500">
+            {productData.brand} • {productData.variantLabel} • {productData.availabilitySummary}
+          </p>
+          <p className="mt-5 text-3xl font-medium">{productData.priceLabel}</p>
+          <p className="mt-5 text-gray-500 md:w-4/5 leading-7">
+            MobileScout is currently using the pakistan-iphones API. This page
+            maps the catalog entry into a cleaner detail view while preserving
+            sync timestamps, price range, store listings, and availability data.
+          </p>
+          <div className="grid grid-cols-2 gap-3 mt-6 md:w-4/5">
+            <div className="border border-gray-200 rounded-lg p-3">
+              <p className="text-xs uppercase tracking-wide text-gray-400">
+                Brand
+              </p>
+              <p className="text-sm text-gray-700 mt-1">{productData.brand}</p>
+            </div>
+            <div className="border border-gray-200 rounded-lg p-3">
+              <p className="text-xs uppercase tracking-wide text-gray-400">
+                Slug
+              </p>
+              <p className="text-sm text-gray-700 mt-1">{productData.slug || "Not available"}</p>
+            </div>
+            <div className="border border-gray-200 rounded-lg p-3">
+              <p className="text-xs uppercase tracking-wide text-gray-400">
+                Lowest Price
+              </p>
+              <p className="text-sm text-gray-700 mt-1">
+                {productData.formattedMinPrice || "Price not listed"}
+              </p>
+            </div>
+            <div className="border border-gray-200 rounded-lg p-3">
+              <p className="text-xs uppercase tracking-wide text-gray-400">
+                Highest Price
+              </p>
+              <p className="text-sm text-gray-700 mt-1">
+                {productData.formattedMaxPrice || "Price not listed"}
+              </p>
+            </div>
+            <div className="border border-gray-200 rounded-lg p-3">
+              <p className="text-xs uppercase tracking-wide text-gray-400">
+                Offer Count
+              </p>
+              <p className="text-sm text-gray-700 mt-1">
+                {productData.offerCount || productData.stores.length}
+              </p>
+            </div>
+            <div className="border border-gray-200 rounded-lg p-3">
+              <p className="text-xs uppercase tracking-wide text-gray-400">
+                Last Synced
+              </p>
+              <p className="text-sm text-gray-700 mt-1">
+                {formatDate(productData.lastSyncedAt)}
+              </p>
+            </div>
+            <div className="border border-gray-200 rounded-lg p-3">
+              <p className="text-xs uppercase tracking-wide text-gray-400">
+                Sheet Updated
+              </p>
+              <p className="text-sm text-gray-700 mt-1">
+                {formatDate(productData.sheetUpdatedAt)}
+              </p>
+            </div>
+            <div className="border border-gray-200 rounded-lg p-3">
+              <p className="text-xs uppercase tracking-wide text-gray-400">
+                Sync Batch
+              </p>
+              <p className="text-sm text-gray-700 mt-1 break-all">
+                {productData.syncBatchId || "Not available"}
+              </p>
+            </div>
+          </div>
+          <div className="my-8">
+            <hr className="mb-8" />
+            <div className="flex flex-col gap-4">
+              {productData.stores.map((store) => (
+                <div
+                  key={`${productData._id}-${store.storeName}-${store.productUrl || "store"}`}
+                  className="rounded-2xl border border-gray-200 p-4"
+                >
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <p className="text-base font-semibold">{store.storeName}</p>
+                      <p className="text-sm text-gray-500">{store.availability}</p>
+                    </div>
+                    <div className="text-left sm:text-right">
+                      <p className="text-sm font-medium text-black">
+                        {store.priceLabel}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {store.sellerName || "Seller not specified"}
+                      </p>
+                    </div>
+                  </div>
+                  {store.productUrl && (
+                    <a
+                      className="mt-3 inline-flex text-sm font-medium text-black underline underline-offset-4"
+                      href={store.productUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Open source listing
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="mt-20">
+        <div className="flex">
+          <div className="border px-5 py-3 text-sm">Overview</div>
+          <div className="border px-5 py-3 text-sm">API Structure</div>
+        </div>
+        <div className="border px-5 py-3 flex flex-col gap-4 text-sm text-gray-600">
+          <p>
+            The frontend is intentionally not using a checkout flow here. Each
+            item is presented as a structured catalog entry using the API
+            fields returned by `http://localhost:5000/api/pakistan-iphones`.
+          </p>
+          <p>
+            The detail layout exposes linked offers, raw sync metadata, pricing,
+            store availability, brand data, and image source information so
+            MobileScout works like a reference catalog instead of an e-commerce
+            storefront.
+          </p>
+        </div>
+      </div>
+      <RelatedProduct category={productData.category} currentId={productData._id} />
+    </div>
+  ) : (
+    <div className="border-t pt-16">
+      <div className="rounded-lg border border-gray-200 px-6 py-10 text-sm text-gray-600">
+        This API entry is not available in the current frontend dataset.
+      </div>
+    </div>
+  );
+};
+
+export default Product;
