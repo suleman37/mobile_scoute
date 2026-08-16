@@ -88,10 +88,11 @@ const PlatformInsights = () => {
   );
 
   return (
-    <section className="my-14 rounded-3xl border border-gray-200 bg-[#fcfcfc] p-5 sm:p-8">
-      <div className="text-center text-3xl">
+    <section className="my-16 rounded-[2rem] border border-black/[0.06] bg-white p-5 shadow-[0_15px_40px_rgba(0,0,0,0.04)] sm:p-8">
+      <div className="text-center">
         <Title text1="MARKETPLACE" text2="INSIGHTS" />
-        <p className="mx-auto mt-3 max-w-2xl text-xs text-gray-600 sm:text-sm">
+        <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-[#1d1d1f] sm:text-4xl">Make a more confident choice.</h2>
+        <p className="mx-auto mt-3 max-w-2xl text-sm leading-6 text-[#6e6e73]">
           Compare average listed prices and customer-feedback scores across platforms.
         </p>
       </div>

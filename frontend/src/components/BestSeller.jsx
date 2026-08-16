@@ -41,17 +41,18 @@ const BestSeller = () => {
 
   return (
     <>
-      <div className="my-10">
-        <div className="text-center py-8 text-3xl">
+      <section className="my-16 overflow-hidden rounded-[2rem] bg-[#e8edf9] px-5 py-10 sm:px-8 sm:py-14">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
           <Title text1={"NEWER"} text2={"GENERATIONS"} />
-          <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600">
-            A secondary strip sourced from the same normalized catalog payload,
-            separated from the latest sync grid so Home shows broader device
-            coverage without repeating the same cards.
+          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-[#1d1d1f] sm:text-4xl">Explore what's next.</h2>
+          </div>
+          <p className="max-w-md text-sm leading-6 text-[#555b69]">
+            A focused selection of newer generations from across the MobileScout catalog.
           </p>
         </div>
         {latestProduct.length > 0 && (
-          <div className="flex gap-4 overflow-x-auto pb-2">
+          <div className="mt-8 flex gap-4 overflow-x-auto pb-2">
             {latestProduct.map((item, index) => {
               return (
                 <div className="min-w-[220px] flex-1" key={index}>
@@ -69,7 +70,7 @@ const BestSeller = () => {
             })}
           </div>
         )}
-      </div>
+      </section>
     </>
   );
 };

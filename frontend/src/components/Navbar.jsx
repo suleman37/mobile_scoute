@@ -1,8 +1,6 @@
 import React, { useState, useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
-import search from "../assets/frontend_assets/search_icon.png";
 import { Link, NavLink } from "react-router-dom";
-import dropdown from "../assets/frontend_assets/dropdown_icon.png";
 import Menu from "../assets/frontend_assets/menu_icon.png";
 
 const Navbar = () => {
@@ -11,49 +9,35 @@ const Navbar = () => {
 
   return (
     <React.Fragment>
-      <div className="flex items-center justify-between py-5 font-medium">
-        <Link to="/">
-          <span className="text-lg font-bold uppercase tracking-[0.18em] text-gray-700">
-            MOBILESCOUT
-          </span>
-        </Link>
-        <ul className="sm:flex gap-5 text-sm text-gray-700 hidden">
-          <NavLink to="/" className="flex flex-col items-center gap-1">
-            <p>HOME</p>
-            <hr className="w-2/3 border-none h-[1.5px] bg-gray-700 hidden" />
-          </NavLink>
-          <NavLink
-            to="/iphone"
-            className="flex flex-col items-center gap-1"
-          >
-            <p>IPHONE</p>
-            <hr className="w-2/3 border-none h-[1.5px] bg-gray-700 hidden" />
-          </NavLink>
-          <NavLink
-            to="/android"
-            className="flex flex-col items-center gap-1"
-          >
-            <p>ANDROID</p>
-            <hr className="w-2/3 border-none h-[1.5px] bg-gray-700 hidden" />
-          </NavLink>
-          <NavLink
-            to="/avalibility"
-            className="flex flex-col items-center gap-1"
-          >
-            <p>AVAILABILITY</p>
-            <hr className="w-2/3 border-none h-[1.5px] bg-gray-700 hidden" />
-          </NavLink>
+      <header className="sticky top-0 z-[110] -mx-4 border-b border-black/[0.06] bg-[#f5f5f7]/80 px-4 backdrop-blur-xl sm:-mx-7 sm:px-7 md:-mx-[5vw] md:px-[5vw] lg:-mx-[7vw] lg:px-[7vw]">
+        <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between gap-5">
+          <Link to="/" className="flex items-center gap-3" aria-label="MobileScout home">
+            <span className="flex h-8 w-8 items-center justify-center rounded-[11px] bg-[#1d1d1f] text-sm font-bold text-white shadow-lg shadow-black/10">M</span>
+            <span className="text-[15px] font-bold tracking-[-0.03em] text-[#1d1d1f] sm:text-base">MobileScout</span>
+          </Link>
+
+        <ul className="hidden items-center gap-1 rounded-full border border-black/[0.07] bg-white/75 p-1 text-[13px] font-medium text-[#424245] shadow-sm lg:flex">
+          <NavLink to="/" className="rounded-full px-4 py-2 transition hover:bg-[#f5f5f7]">Discover</NavLink>
+          <NavLink to="/iphone" className="rounded-full px-4 py-2 transition hover:bg-[#f5f5f7]">iPhone</NavLink>
+          <NavLink to="/android" className="rounded-full px-4 py-2 transition hover:bg-[#f5f5f7]">Android</NavLink>
+          <NavLink to="/avalibility" className="rounded-full px-4 py-2 transition hover:bg-[#f5f5f7]">Availability</NavLink>
         </ul>
-        <div className="flex items-center gap-6">
-          <div className="hidden rounded-full border border-gray-200 px-3 py-1 text-[11px] font-normal text-gray-500 md:block">
+
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="hidden max-w-48 truncate rounded-full border border-black/[0.07] bg-white px-3 py-2 text-[11px] font-medium text-[#6e6e73] md:block">
             {currentLocation}
           </div>
-          <img
-            src={search}
-            className="w-5 cursor-pointer"
-            alt="search_icon"
+          <button
+            type="button"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-black/[0.08] bg-white text-[#1d1d1f] transition hover:scale-105 hover:bg-[#1d1d1f] hover:text-white"
+            aria-label="Search catalog"
             onClick={() => setShowSearch(true)}
-          />
+          >
+            <svg aria-hidden="true" className="h-[18px] w-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <circle cx="11" cy="11" r="6" />
+              <path d="m20 20-4.35-4.35" />
+            </svg>
+          </button>
           <img
             onClick={() => setVisible(!visible)}
             src={Menu}
@@ -61,55 +45,21 @@ const Navbar = () => {
             alt="menu"
           />
         </div>
+        </div>
         <div
-          className={`absolute top-0 left-0 bottom-0 overflow-hidden bg-white z-10 transition-all ${
-            visible ? "w-full" : "w-0"
+          className={`absolute left-0 right-0 top-[72px] overflow-hidden border-b border-black/[0.07] bg-white shadow-xl transition-all sm:hidden ${
+            visible ? "max-h-96 py-3" : "max-h-0 py-0"
           }`}
         >
-          <div className="flex flex-col text-gray-500">
-            <div className="flex items-center gap-4 p-3">
-              <img
-                onClick={() => setVisible(!visible)}
-                src={dropdown}
-                className="h-4 rotate-180 cursor-pointer"
-                alt="dropdown"
-              />
-              <p>Back</p>
-            </div>
-            <div className="border px-6 py-3 text-xs text-gray-500">
-              {currentLocation}
-            </div>
-            <NavLink
-              className="py-2 pl-6 border"
-              onClick={() => setVisible(!visible)}
-              to="/"
-            >
-              HOME
-            </NavLink>
-            <NavLink
-              className="py-2 pl-6 border"
-              onClick={() => setVisible(!visible)}
-              to="/iphone"
-            >
-              IPHONE
-            </NavLink>
-            <NavLink
-              className="py-2 pl-6 border"
-              onClick={() => setVisible(!visible)}
-              to="/android"
-            >
-              ANDROID
-            </NavLink>
-            <NavLink
-              className="py-2 pl-6 border"
-              onClick={() => setVisible(!visible)}
-              to="/avalibility"
-            >
-              AVAILABILITY
-            </NavLink>
+          <div className="flex flex-col px-4 text-sm font-medium text-[#424245]">
+            <div className="mb-2 rounded-xl bg-[#f5f5f7] px-4 py-3 text-xs text-[#6e6e73]">{currentLocation}</div>
+            <NavLink className="rounded-xl px-4 py-3 hover:bg-[#f5f5f7]" onClick={() => setVisible(false)} to="/">Discover</NavLink>
+            <NavLink className="rounded-xl px-4 py-3 hover:bg-[#f5f5f7]" onClick={() => setVisible(false)} to="/iphone">iPhone</NavLink>
+            <NavLink className="rounded-xl px-4 py-3 hover:bg-[#f5f5f7]" onClick={() => setVisible(false)} to="/android">Android</NavLink>
+            <NavLink className="rounded-xl px-4 py-3 hover:bg-[#f5f5f7]" onClick={() => setVisible(false)} to="/avalibility">Availability</NavLink>
           </div>
         </div>
-      </div>
+      </header>
     </React.Fragment>
   );
 };

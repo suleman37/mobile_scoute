@@ -14,9 +14,12 @@ const ProductItem = ({
   return (
     <Link
       to={`/product/${_id}`}
-      className="group block rounded-2xl border border-gray-200 bg-white p-3 text-gray-800 transition hover:-translate-y-1 hover:shadow-lg"
+      className="group block overflow-hidden rounded-[1.5rem] border border-black/[0.07] bg-white p-2.5 text-[#1d1d1f] shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_18px_36px_rgba(0,0,0,0.1)]"
     >
-      <div className="aspect-square overflow-hidden rounded-2xl bg-[#f7f7f7] p-4 flex items-center justify-center">
+      <div className="relative flex aspect-square items-center justify-center overflow-hidden rounded-[1.15rem] bg-[#f5f5f7] p-5">
+        <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[#6e6e73] shadow-sm">
+          {releaseYear || "New"}
+        </span>
         {image?.[0] ? (
           <img
             className="h-full w-full object-contain transition duration-300 group-hover:scale-105"
@@ -29,13 +32,15 @@ const ProductItem = ({
           </div>
         )}
       </div>
-      <div className="space-y-2 px-1 pb-1 pt-4">
-        <p className="text-xs uppercase tracking-[0.22em] text-gray-400">
-          {brand || "Unknown brand"} • {releaseYear || variantLabel}
+      <div className="space-y-2 px-2 pb-2 pt-4">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#6e6e73]">
+          {brand || "Unknown brand"}
         </p>
-        <p className="text-base font-semibold leading-6">{name}</p>
-        <p className="text-sm text-gray-600">{availabilitySummary}</p>
-        <p className="text-sm font-medium text-black">{priceLabel}</p>
+        <p className="min-h-12 text-[17px] font-semibold leading-6 tracking-[-0.02em]">{name}</p>
+        <div className="flex items-center justify-between gap-2 pt-1">
+          <p className="text-xs text-[#6e6e73]">{availabilitySummary}</p>
+          <p className="whitespace-nowrap text-sm font-semibold text-[#1d1d1f]">{priceLabel}</p>
+        </div>
       </div>
     </Link>
   );

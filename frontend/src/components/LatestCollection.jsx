@@ -15,17 +15,18 @@ const LatestCollection = () => {
 
   return (
     <>
-      <div className="my-10">
-        <div className="text-center py-8 text-3xl">
+      <section className="my-16">
+        <div className="flex flex-col gap-3 py-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
           <Title text1={"LATEST"} text2={"SYNC"} />
-          <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600">
-            The newest entries pulled from the shared catalog response. Each
-            card is rendered from the new `data` payload shape with image,
-            pricing, and availability already normalized for MobileScout.
+          <h2 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-[#1d1d1f] sm:text-4xl">Fresh from the catalog.</h2>
+          </div>
+          <p className="max-w-md text-sm leading-6 text-[#6e6e73]">
+            Browse newly synced mobiles with current store prices, availability and model details.
           </p>
         </div>
         {latestProduct.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 gap-y-6">
+          <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
             {latestProduct.map((item, index) => {
               return (
                 <ProductItem
@@ -42,7 +43,7 @@ const LatestCollection = () => {
             })}
           </div>
         )}
-      </div>
+      </section>
     </>
   );
 };

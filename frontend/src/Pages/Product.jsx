@@ -49,23 +49,23 @@ const Product = () => {
   }, [id, products]);
 
   return productData ? (
-    <div className="border-t-2 pt-10 transition-opacity ease-in duration-500 opacity-100">
-      <div className="flex gap-12 sm:gap-12 flex-col sm:flex-row">
-        <div className="flex-1 flex flex-col-reverse gap-3 sm:flex-row">
-          <div className="flex sm:flex-col overflow-x-auto sm:overflow-y-scroll justify-between sm:justify-normal sm:w-[18.7%] w-full">
+    <div className="py-10 transition-opacity duration-500 ease-in opacity-100">
+      <div className="flex flex-col gap-8 rounded-[2rem] border border-black/[0.07] bg-white p-4 shadow-[0_18px_45px_rgba(0,0,0,0.04)] sm:flex-row sm:gap-10 sm:p-8">
+        <div className="flex flex-1 flex-col-reverse gap-3 sm:flex-row">
+          <div className="flex w-full justify-between overflow-x-auto sm:w-[18.7%] sm:flex-col sm:justify-normal sm:overflow-y-scroll">
             {(productData.image || []).map((item, index) => (
               <img
                 src={item}
                 alt={`Product ${index + 1}`}
                 key={index}
-                className="w-[24%] sm:w-full sm:mb-3 flex-shink-0 cursor-pointer"
+                className="w-[24%] cursor-pointer rounded-xl border border-black/[0.06] bg-[#f5f5f7] p-1 sm:mb-3 sm:w-full"
                 onClick={() => setImage(item)}
               />
             ))}
           </div>
-          <div className="w-full sm:w-[80%]">
+          <div className="flex w-full items-center justify-center rounded-[1.5rem] bg-[#f5f5f7] p-4 sm:w-[80%]">
             {image ? (
-              <img src={image} alt="Selected product" className="w-full h-auto" />
+              <img src={image} alt="Selected product" className="h-auto w-full rounded-[1.2rem]" />
             ) : (
               <div className="flex min-h-[420px] items-center justify-center rounded-2xl bg-[#f7f7f7] text-sm uppercase tracking-[0.25em] text-gray-400">
                 No image available
@@ -73,19 +73,20 @@ const Product = () => {
             )}
           </div>
         </div>
-        <div className="flex-1">
-          <h1 className="font-medium text-2xl mt-2">{productData.name}</h1>
-          <p className="mt-2 text-sm uppercase tracking-[0.2em] text-gray-500">
+        <div className="flex-1 py-2">
+          <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-[#6e6e73]">{productData.brand}</p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-[-0.045em] text-[#1d1d1f] sm:text-4xl">{productData.name}</h1>
+          <p className="mt-3 text-xs font-semibold uppercase tracking-[0.16em] text-[#6e6e73]">
             {productData.brand} • {productData.variantLabel} • {productData.availabilitySummary}
           </p>
-          <p className="mt-5 text-3xl font-medium">{productData.priceLabel}</p>
-          <p className="mt-5 text-gray-500 md:w-4/5 leading-7">
+          <p className="mt-6 text-2xl font-semibold tracking-[-0.03em] text-[#1d1d1f]">{productData.priceLabel}</p>
+          <p className="mt-5 leading-7 text-[#6e6e73] md:w-4/5">
             MobileScout is currently using the pakistan-iphones API. This page
             maps the catalog entry into a cleaner detail view while preserving
             sync timestamps, price range, store listings, and availability data.
           </p>
-          <div className="grid grid-cols-2 gap-3 mt-6 md:w-4/5">
-            <div className="border border-gray-200 rounded-lg p-3">
+          <div className="mt-7 grid grid-cols-2 gap-3 md:w-4/5">
+            <div className="rounded-xl border border-black/[0.07] bg-[#fbfbfc] p-3">
               <p className="text-xs uppercase tracking-wide text-gray-400">
                 Brand
               </p>

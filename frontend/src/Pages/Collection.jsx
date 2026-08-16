@@ -106,10 +106,10 @@ const Collection = ({
   const sortedProducts = sortProduct();
 
   return (
-    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t">
-      <div className="min-w-60">
+    <div className="flex flex-col gap-6 py-10 lg:flex-row lg:gap-10">
+      <aside className="min-w-60 rounded-[1.5rem] border border-black/[0.07] bg-white p-5 lg:h-fit">
         <p
-          className="my-2 text-xl filter items-center cursor-pointer gap-2 flex"
+          className="flex cursor-pointer items-center justify-between text-sm font-semibold text-[#1d1d1f] lg:cursor-default"
           onClick={toggleFilter}
         >
           FILTERS
@@ -120,7 +120,7 @@ const Collection = ({
           />
         </p>
         <div
-          className={`border border-gray-300 pl-5 py-3 mt-6 ${
+          className={`mt-5 border-t border-black/[0.07] pt-5 ${
             showFilter ? "" : "hidden sm:block"
           }`}
         >
@@ -141,7 +141,7 @@ const Collection = ({
         </div>
 
         <div
-          className={`border border-gray-300 pl-5 py-3 mt-6 my-5 ${
+          className={`my-5 border-t border-black/[0.07] pt-5 ${
             showFilter ? "" : "hidden sm:block"
           }`}
         >
@@ -160,13 +160,14 @@ const Collection = ({
             ))}
           </div>
         </div>
-      </div>
+      </aside>
 
       <div className="flex-1">
-        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between text-base sm:text-2xl">
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <Title text1={titleText1} text2={titleText2} />
-            <p className="text-sm text-gray-500">{descriptionText}</p>
+            <h1 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-[#1d1d1f] sm:text-4xl">Choose your next mobile.</h1>
+            <p className="mt-3 max-w-2xl text-sm leading-6 text-[#6e6e73]">{descriptionText}</p>
             {catalogPagination && (
               <p className="text-sm text-gray-500">
                 Loaded {catalogPagination.loadedItems || catalogProducts.length} entries from{" "}
@@ -177,7 +178,7 @@ const Collection = ({
           </div>
           {sortedProducts.length > 0 && (
             <select
-              className="border-2 border-gray-100 text-sm px-2"
+              className="rounded-full border border-black/[0.08] bg-white px-4 py-2.5 text-sm text-[#424245] outline-none"
               onChange={(e) => setSortType(e.target.value)}
             >
               <option value="relevant">Sort by: Recently synced</option>
@@ -199,7 +200,7 @@ const Collection = ({
           </div>
         )}
         {!catalogLoading && !catalogError && sortedProducts.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-6">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 xl:grid-cols-4">
             {sortedProducts.map((item, index) => (
               <ProductItem
                 key={index}

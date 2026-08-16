@@ -12,7 +12,7 @@ import Searchbar from "./components/Searchbar";
 const App = () => {
   return (
     <>
-      <div className="px-4 sm:px-7 md:px-[5vw] lg:px-[7vw]">
+      <div className="min-h-screen px-4 sm:px-7 md:px-[5vw] lg:px-[7vw]">
         <Navbar />
         <Searchbar />
         <Routes>

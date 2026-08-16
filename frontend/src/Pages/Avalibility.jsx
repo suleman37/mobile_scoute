@@ -25,9 +25,10 @@ const Avalibility = () => {
 
   return (
     <>
-      <div className="border-t pt-8">
-        <div className="mb-8 text-center text-2xl">
+      <div className="py-12">
+        <div className="mb-10 text-center">
           <Title text1={"AVAILABILITY"} text2={"UPDATES"} />
+          <h1 className="mt-3 text-3xl font-semibold tracking-[-0.045em] text-[#1d1d1f] sm:text-4xl">Catalog updates, at a glance.</h1>
           <p className="mx-auto mt-3 max-w-3xl text-sm leading-7 text-gray-500 sm:text-base">
             Fresh catalog updates from the shared API response, arranged in a
             cleaner story-style layout so visitors can scan brand, pricing, and
@@ -49,14 +50,14 @@ const Avalibility = () => {
         )}
 
         {!productsLoading && !productsError && latestEntries.length > 0 && (
-          <div className="space-y-4">
+          <div className="space-y-5">
             {latestEntries.map((product) => (
               <Link
                 key={product._id}
                 to={`/product/${product._id}`}
-                className="group grid overflow-hidden border border-gray-300 bg-white transition hover:border-gray-400 hover:shadow-[0_14px_40px_rgba(17,17,17,0.08)] md:grid-cols-[24%_76%]"
+                className="group grid overflow-hidden rounded-[1.5rem] border border-black/[0.07] bg-white transition hover:-translate-y-0.5 hover:shadow-[0_18px_40px_rgba(17,17,17,0.08)] md:grid-cols-[24%_76%]"
               >
-                <div className="flex h-[220px] items-center justify-center bg-[#f4f4f4] p-4">
+                <div className="flex h-[220px] items-center justify-center bg-[#f5f5f7] p-4">
                   <img
                     src={product.image?.[0]}
                     alt={product.name}
