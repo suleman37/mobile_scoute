@@ -20,7 +20,7 @@ const ScoutAdvantage = () => {
     () =>
       categories.map((category) => ({
         ...category,
-        image: products.find((product) => product.brand === category.brand)?.image?.[0],
+        image: products.find((product) => product.brand?.toLowerCase() === category.brand.toLowerCase())?.image?.[0],
       })),
     [products]
   );
