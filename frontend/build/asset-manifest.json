@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.50a39073.css",
-    "main.js": "/static/js/main.bb7f509a.js",
+    "main.css": "/static/css/main.58345a95.css",
+    "main.js": "/static/js/main.0028fecd.js",
     "static/media/hero-android-real.jpg": "/static/media/hero-android-real.bcd64d491cd19c0eb597.jpg",
     "static/media/hero-iphone-real.jpg": "/static/media/hero-iphone-real.9897524e6b20ed4153b4.jpg",
     "index.html": "/index.html",
-    "main.50a39073.css.map": "/static/css/main.50a39073.css.map",
-    "main.bb7f509a.js.map": "/static/js/main.bb7f509a.js.map"
+    "main.58345a95.css.map": "/static/css/main.58345a95.css.map",
+    "main.0028fecd.js.map": "/static/js/main.0028fecd.js.map"
   },
   "entrypoints": [
-    "static/css/main.50a39073.css",
-    "static/js/main.bb7f509a.js"
+    "static/css/main.58345a95.css",
+    "static/js/main.0028fecd.js"
   ]
 }

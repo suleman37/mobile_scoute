@@ -6,6 +6,9 @@ const currencyFormatter = new Intl.NumberFormat("en-PK", {
   maximumFractionDigits: 0,
 });
 
+const formatCompactPrice = (price) =>
+  price >= 1000 ? `PKR ${(price / 1000).toFixed(0)}k` : `PKR ${price}`;
+
 const PlatformInsights = () => {
   const { products, productsLoading } = useContext(ShopContext);
 
@@ -54,8 +57,22 @@ const PlatformInsights = () => {
         reviews: values.reviews,
       }))
       .sort((a, b) => b.averageRating - a.averageRating || b.reviews - a.reviews);
+    const topSellingPhones = products
+      .map((product) => ({
+        name: product.name,
+        salesCount: product.salesCount || 0,
+        prices: (product.stores || []).reduce((result, store) => {
+          if (store.storeName && typeof store.price === "number") {
+            result[store.storeName] = store.price;
+          }
+          return result;
+        }, {}),
+      }))
+      .filter((product) => product.salesCount > 0)
+      .sort((a, b) => b.salesCount - a.salesCount)
+      .slice(0, 3);
 
-    return { pricePlatforms, preferencePlatforms };
+    return { pricePlatforms, preferencePlatforms, topSellingPhones };
   }, [products]);
 
   if (productsLoading || !products.length) {
@@ -65,6 +82,10 @@ const PlatformInsights = () => {
   const maxPrice = Math.max(...insights.pricePlatforms.map((item) => item.averagePrice), 1);
   const preferredStore = insights.pricePlatforms[0];
   const mostLiked = insights.preferencePlatforms[0];
+  const highestTopPhonePrice = Math.max(
+    ...insights.topSellingPhones.flatMap((phone) => Object.values(phone.prices)),
+    1
+  );
 
   return (
     <section className="my-14 rounded-3xl border border-gray-200 bg-[#fcfcfc] p-5 sm:p-8">
@@ -138,8 +159,54 @@ const PlatformInsights = () => {
           </div>
         </div>
       </div>
+      {insights.topSellingPhones.length > 0 && (
+        <div className="mt-5 rounded-2xl border border-gray-200 bg-white p-5">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <h3 className="font-semibold text-gray-900">Top 3 best-selling mobiles: price comparison</h3>
+              <p className="mt-1 text-xs text-gray-500">
+                Each pair compares current listed prices for the most popular seeded catalog mobiles.
+              </p>
+            </div>
+            <div className="flex gap-3 text-xs text-gray-500">
+              <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm bg-amber-400" />PriceOye</span>
+              <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm bg-emerald-600" />Telemart</span>
+            </div>
+          </div>
+          <div className="mt-7 grid grid-cols-3 gap-3 border-b border-gray-200 sm:gap-8">
+            {insights.topSellingPhones.map((phone) => (
+              <div key={phone.name} className="min-w-0 text-center">
+                <p className="mb-3 text-xs font-semibold text-gray-700">{phone.salesCount.toLocaleString()} sales</p>
+                <div className="flex h-48 items-end justify-center gap-2 sm:gap-3">
+                  {[
+                    { name: "PriceOye", color: "bg-amber-400" },
+                    { name: "Telemart", color: "bg-emerald-600" },
+                  ].map((store) => {
+                    const price = phone.prices[store.name];
+                    if (!price) return null;
+
+                    return (
+                      <div key={store.name} className="flex h-full w-1/2 max-w-20 items-end">
+                        <div
+                          className={`relative w-full rounded-t-lg ${store.color}`}
+                          style={{ height: `${Math.max((price / highestTopPhonePrice) * 100, 12)}%` }}
+                        >
+                          <span className="absolute -top-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-[10px] font-medium text-gray-600">
+                            {formatCompactPrice(price)}
+                          </span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+                <p className="mt-3 truncate text-xs font-semibold text-gray-800 sm:text-sm">{phone.name}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
       <p className="mt-5 text-center text-[11px] text-gray-400">
-        Ratings use the seeded sample feedback currently stored in the catalog.
+        Ratings and sales use seeded sample catalog data.
       </p>
     </section>
   );

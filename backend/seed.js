@@ -79,6 +79,12 @@ const createYouTubeReview = (title) => ({
   url: youtubeReviewUrls[title],
 });
 
+const sampleSalesCounts = {
+  "iPhone 16": 1240,
+  "Galaxy S25": 1160,
+  "Redmi Note 14 Pro+": 1095,
+};
+
 const customerProfiles = [
   "Ali R.", "Sana K.", "Usman A.", "Hira M.", "Hamza F.", "Ayesha N.",
   "Bilal S.", "Maham I.", "Zain H.", "Laiba A.", "Ahmed K.", "Noor F.",
@@ -128,6 +134,7 @@ const phoneData = catalog.map(
     `http://localhost:${process.env.PORT || 5000}/images/seed-phones/phone-${String(index + 1).padStart(2, "0")}.png`,
   ],
   availabilitySummary: "Available now",
+  salesCount: sampleSalesCounts[title] || 300 + ((index * 73) % 560),
   videoReviews: [createYouTubeReview(title)],
   customerReviews: createCustomerReviews(title, index),
   stores: [
